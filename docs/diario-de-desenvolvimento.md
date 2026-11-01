@@ -1,4 +1,4 @@
-## 01/11/2026 -Diário do projeto — A origem da curiosidade
+## 01/11/2026 - A origem da curiosidade
 
 Este projeto nasceu de uma curiosidade que me acompanha desde a infância: **como o ser humano consegue transformar minerais extraídos da natureza em componentes capazes de realizar operações tão complexas quanto as de um computador?** Hoje, essas tecnologias estão presentes em praticamente todos os aspectos da nossa vida, dos computadores e videogames às televisões e aos eletrodomésticos. Mas, apesar de convivermos diariamente com esses dispositivos, raramente paramos para pensar em como eles realmente funcionam.
 
@@ -17,3 +17,41 @@ Para dar os primeiros passos, decidi estudar **Rust e Arduino**, explorando a re
 **Este diário será o registro dessa jornada:** os conceitos que aprender, os experimentos que realizar, os erros que encontrar e as soluções que desenvolver. Não espero dominar todas essas áreas de imediato, mas quero construir esse conhecimento de forma progressiva, compreendendo não apenas como fazer as coisas funcionarem, mas principalmente por que elas funcionam.
 
 Afinal, por trás de toda essa tecnologia existe uma pergunta simples que me acompanha desde criança: **como transformamos os recursos da natureza em máquinas capazes de executar nossas ideias?** É essa pergunta que pretendo explorar ao longo deste projeto.
+
+## 01/11/2026 -Definição do plano de estudos de Rust
+Para iniciar os estudos, selecionei três recursos gratuitos que se complementam e permitem aprender a linguagem de forma progressiva, combinando teoria, exercícios práticos e experimentação.
+
+### Recursos de estudo
+
+1. **Teoria:** [The Rust Programming Language](https://doc.rust-lang.org/book/) — livro oficial que apresenta os principais conceitos da linguagem, desde os fundamentos até tópicos mais avançados.
+2. **Exercícios:** [Rustlings](https://rustlings.rust-lang.org/) — conjunto de exercícios práticos que ajudam a fixar os conceitos estudados e a desenvolver familiaridade com a sintaxe e as particularidades do Rust.
+3. **Experimentação:** [Rust Playground](https://play.rust-lang.org/) — ambiente on-line que permite escrever, compilar e executar pequenos programas em Rust diretamente no navegador, sem a necessidade de configurar um ambiente de desenvolvimento local.
+
+A combinação desses três recursos oferece uma abordagem equilibrada de aprendizado: o livro apresenta os conceitos, o Rustlings permite praticá-los e o Rust Playground facilita a experimentação livre. Além disso, todos estão disponíveis gratuitamente.
+
+### Etapas de aprendizagem
+
+O plano foi organizado para construir uma base sólida em Rust e, gradualmente, direcionar os estudos para os conceitos necessários ao desenvolvimento de um processador RISC-V.
+
+| Etapa | Conteúdo | Objetivo |
+|---|---|---|
+| 1 | Tipos, variáveis, funções e controle de fluxo | Compreender os fundamentos da linguagem e desenvolver os primeiros programas. |
+| 2 | Arrays, tuplas, slices e referências | Aprender a organizar dados e trabalhar com diferentes formas de acesso à memória. |
+| 3 | Ownership, borrowing e lifetimes | Entender o gerenciamento de memória e os mecanismos de segurança do Rust. |
+| 4 | Structs, enums e pattern matching | Representar estruturas de dados e modelar comportamentos de maneira organizada. |
+| 5 | Manipulação de bits e operações binárias | Trabalhar com representação binária, máscaras de bits, deslocamentos e operações lógicas. |
+| 6 | Leitura e decodificação de instruções RISC-V | Compreender como instruções de máquina são representadas em binário e interpretadas por um programa. |
+| 7 | Desenvolvimento de um simulador RV32I em Rust | Aplicar os conhecimentos adquiridos na implementação de um simulador capaz de interpretar e executar instruções da arquitetura RISC-V RV32I. |
+
+### Objetivo final
+
+Ao concluir essas etapas, espero ter conhecimentos suficientes de Rust para desenvolver um **simulador funcional da arquitetura RISC-V RV32I**.
+
+Esse simulador será um passo importante para o objetivo principal do projeto: compreender como um processador funciona internamente, desde a representação binária de uma instrução até sua execução.
+
+A ideia é utilizar o simulador como uma ponte entre o desenvolvimento de software e a arquitetura de computadores. Antes de implementar um processador em hardware, poderei experimentar conceitos como registradores, memória, decodificação de instruções e fluxo de execução por meio de um programa em Rust.
+
+Dessa forma, cada etapa do aprendizado terá uma aplicação prática no projeto, evitando que o estudo da linguagem se limite à memorização de sintaxe e exemplos isolados.
+
+### [Hello World!](../rust/fundamentos/hello_world.rs)
+A construção  e compilação foi relativamente simples, me passando a impressão de interface amigavel.
