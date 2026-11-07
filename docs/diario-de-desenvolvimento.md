@@ -1,3 +1,5 @@
+# Diário de desenvolvimento
+
 ## 01/11/2026 - A origem da curiosidade
 
 Este projeto nasceu de uma curiosidade que me acompanha desde a infância: **como o ser humano consegue transformar minerais extraídos da natureza em componentes capazes de realizar operações tão complexas quanto as de um computador?** Hoje, essas tecnologias estão presentes em praticamente todos os aspectos da nossa vida, dos computadores e videogames às televisões e aos eletrodomésticos. Mas, apesar de convivermos diariamente com esses dispositivos, raramente paramos para pensar em como eles realmente funcionam.
@@ -19,6 +21,7 @@ Para dar os primeiros passos, decidi estudar **Rust e Arduino**, explorando a re
 Afinal, por trás de toda essa tecnologia existe uma pergunta simples que me acompanha desde criança: **como transformamos os recursos da natureza em máquinas capazes de executar nossas ideias?** É essa pergunta que pretendo explorar ao longo deste projeto.
 
 ## 01/11/2026 -Definição do plano de estudos de Rust
+
 Para iniciar os estudos, selecionei três recursos gratuitos que se complementam e permitem aprender a linguagem de forma progressiva, combinando teoria, exercícios práticos e experimentação.
 
 ### Recursos de estudo
@@ -33,8 +36,8 @@ A combinação desses três recursos oferece uma abordagem equilibrada de aprend
 
 O plano foi organizado para construir uma base sólida em Rust e, gradualmente, direcionar os estudos para os conceitos necessários ao desenvolvimento de um processador RISC-V.
 
-| Etapa | Conteúdo | Objetivo |
-|---|---|---|
+| Etapa | Conteúdo | O bjetivo |
+| --- | --- | --- |
 | 1 | Tipos, variáveis, funções e controle de fluxo | Compreender os fundamentos da linguagem e desenvolver os primeiros programas. |
 | 2 | Arrays, tuplas, slices e referências | Aprender a organizar dados e trabalhar com diferentes formas de acesso à memória. |
 | 3 | Ownership, borrowing e lifetimes | Entender o gerenciamento de memória e os mecanismos de segurança do Rust. |
@@ -54,4 +57,27 @@ A ideia é utilizar o simulador como uma ponte entre o desenvolvimento de softwa
 Dessa forma, cada etapa do aprendizado terá uma aplicação prática no projeto, evitando que o estudo da linguagem se limite à memorização de sintaxe e exemplos isolados.
 
 ### [Hello World!](../rust/fundamentos/hello_world.rs)
+
 A construção  e compilação foi relativamente simples, me passando a impressão de interface amigavel.
+
+## 06/11/2026 — Primeiros passos com Arduino
+
+Entre o início dos meus estudos de Rust e o dia de hoje, meu kit Arduino finalmente foi entregue. Aproveitei esse período para começar a estudar os fundamentos de eletrônica e realizar alguns experimentos com os motores que acompanham o kit, inicialmente motivado por um projeto pessoal.
+
+É impressionante perceber o que esses pequenos microcontroladores são capazes de fazer. Com poucas linhas de código e alguns componentes eletrônicos, conseguimos controlar movimentos, acionar dispositivos e construir sistemas que interagem diretamente com o mundo físico. Entretanto, durante esses primeiros experimentos, percebi que ainda enxergo boa parte do funcionamento do microcontrolador como uma espécie de **caixa-preta**: escrevo o código, compilo e envio para a placa, mas ainda não compreendo completamente o que acontece entre essas etapas.
+
+Ao experimentar um servomotor e um motor de passo, algumas dúvidas começaram a surgir. Como os sinais elétricos são enviados pelo Arduino e interpretados por esses componentes? Por que o motor de passo necessita de um driver para funcionar corretamente, enquanto o servomotor pode ser conectado diretamente aos pinos da placa? Como funcionam os sinais PWM (Pulse Width Modulation) gerados pelo Arduino? O que acontece durante a gravação do programa compilado no microcontrolador? Como ele armazena, interpreta e executa essas instruções?
+
+Essas são algumas das questões que ainda quero investigar. Percebi que simplesmente aprender a utilizar bibliotecas e escrever códigos para controlar componentes não é suficiente para o que pretendo alcançar com este projeto. Quero entender o que acontece por trás dessas abstrações, desde os sinais elétricos até a execução das instruções pelo microcontrolador.
+
+Além das questões técnicas, esses primeiros contatos também despertaram reflexões sobre a própria indústria de semicondutores. Quanto custa produzir um microcontrolador? Quais recursos, tecnologias e conhecimentos são necessários para fabricá-lo? Por que ainda temos tanta dependência de componentes produzidos no exterior?
+
+Acredito que seria extremamente importante para o Brasil desenvolver maior autonomia nessa indústria e incentivar uma cultura de experimentação e desenvolvimento tecnológico desde o ensino básico. Imagino quantos jovens com curiosidades semelhantes à minha poderiam ser impactados se tivessem acesso a ferramentas, componentes e oportunidades para experimentar desde cedo. Esse conhecimento poderia gerar contribuições em diversos setores, inclusive em áreas nas quais o Brasil já possui grande relevância, como a agropecuária. Afinal, a tecnologia embarcada, a automação e os sistemas inteligentes têm um enorme potencial de transformação nesses segmentos.
+
+Infelizmente, hoje o acesso a componentes eletrônicos e ferramentas de desenvolvimento ainda pode ser bastante limitado pelo custo e pela disponibilidade. Isso reforça minha percepção de que democratizar o acesso ao conhecimento e à experimentação é tão importante quanto desenvolver a própria tecnologia.
+
+Para dar continuidade ao aprendizado e tentar responder algumas dessas perguntas na prática, decidi iniciar um novo experimento: **desenvolver um videogame utilizando uma Raspberry Pi Pico com o microcontrolador RP2040, reaproveitando um controle de videogame retrô que já possuo.**
+
+A ideia é utilizar esse projeto como uma oportunidade para explorar melhor a interação entre software e hardware, compreender como os microcontroladores trabalham com entradas e saídas, estudar comunicação com periféricos e descobrir como transformar código em algo que efetivamente acontece no mundo físico.
+
+Mais uma vez, o objetivo não é apenas fazer funcionar, mas entender como e por que funciona. Afinal, cada novo experimento aproxima um pouco mais aquela curiosidade inicial da compreensão de como essas máquinas são construídas.
