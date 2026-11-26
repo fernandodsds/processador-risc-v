@@ -81,3 +81,95 @@ Para dar continuidade ao aprendizado e tentar responder algumas dessas perguntas
 A ideia é utilizar esse projeto como uma oportunidade para explorar melhor a interação entre software e hardware, compreender como os microcontroladores trabalham com entradas e saídas, estudar comunicação com periféricos e descobrir como transformar código em algo que efetivamente acontece no mundo físico.
 
 Mais uma vez, o objetivo não é apenas fazer funcionar, mas entender como e por que funciona. Afinal, cada novo experimento aproxima um pouco mais aquela curiosidade inicial da compreensão de como essas máquinas são construídas.
+
+## 25/11/2026 — Primeiros experimentos com Rust e engenharia reversa de hardware
+
+Depois dos primeiros contatos com Rust e Arduino, comecei a direcionar meus estudos para pequenos experimentos que tivessem relação mais direta com o objetivo principal deste projeto: compreender como um processador funciona e como o software interage com o hardware.
+
+### Rust: saindo da teoria para a prática
+
+Nos estudos de Rust, avancei para os primeiros exercícios práticos, utilizando os conceitos apresentados no livro oficial da linguagem. Um dos primeiros desafios foi desenvolver o tradicional *Guessing Game*, um jogo de adivinhação que utiliza entrada de dados pelo terminal, estruturas de repetição, comparação de valores e tratamento de erros.
+
+Esse exercício foi interessante principalmente para entender como o Rust trabalha com entradas do usuário e conversão de tipos. Também comecei a perceber algumas particularidades da linguagem, como o tratamento de resultados por meio de `Result` e `match`, além da necessidade de lidar explicitamente com situações em que uma operação pode falhar.
+
+Depois desse exercício, decidi criar algo mais próximo do objetivo final do projeto: uma pequena ALU (*Arithmetic Logic Unit*).
+
+A ideia foi desenvolver uma calculadora simples que recebesse dois valores e permitisse realizar operações de adição e subtração. Embora seja um programa bastante simples, ele representa um primeiro contato com um dos componentes fundamentais de qualquer processador.
+
+Uma ALU é responsável por executar operações aritméticas e lógicas sobre os dados utilizados pelo processador. Naturalmente, minha implementação ainda está muito distante de uma unidade real, mas considero importante começar a reproduzir esses conceitos por meio de software antes de avançar para a implementação em hardware.
+
+Nesse primeiro momento, utilizei o tipo `u32`, estruturas condicionais, `match` e `loop`. Também precisei trabalhar com a conversão de entradas textuais para valores numéricos.
+
+O próximo passo será expandir essa pequena ALU, adicionando novas operações e explorando melhor a representação binária dos números.
+
+### Arduino: engenharia reversa de um controle de videogame retrô
+
+Uma das partes mais interessantes desse período foi a tentativa de reaproveitar um controle de videogame antigo, proveniente de um DVD Game, para utilizá-lo no projeto do meu próprio console com Raspberry Pi Pico e RP2040.
+
+Inicialmente, tinha apenas uma placa de circuito com um chip encapsulado em resina (conhecido como *chip-on-board* ou simplesmente "gota preta") e cinco fios conectados a ela, sem qualquer identificação. O conector original possuía nove posições, mas apenas cinco delas estavam efetivamente conectadas. Não havia documentação técnica disponível e, portanto, precisei descobrir como aquele circuito funcionava por conta própria.
+
+Decidi abordar o problema como um exercício de engenharia reversa, começando pela análise física da placa e utilizando um multímetro para investigar suas conexões.
+
+**1. Identificação da alimentação e do aterramento**
+
+O primeiro desafio foi descobrir a função de cada um dos cinco fios. Utilizando o multímetro na escala de continuidade, comecei a verificar as conexões entre os contatos dos botões e os fios da placa.
+
+Com esses testes, identifiquei que o fio amarelo estava conectado ao ponto comum de oito dos dez botões, indicando que provavelmente era o GND (terra).
+
+Para identificar a alimentação, utilizei a escala de teste de diodo do multímetro. Ao realizar medições entre os fios, encontrei uma queda de tensão de aproximadamente 700 mV entre o fio branco e o amarelo, com a ponta COM conectada ao branco. Esse comportamento indicou a presença de estruturas semicondutoras internas, permitindo levantar a hipótese de que o fio branco correspondia ao VCC (+5 V).
+
+Essa etapa foi importante porque não queria simplesmente conectar uma alimentação sem conhecer minimamente a estrutura elétrica do circuito e correr o risco de danificar o chip original.
+
+**2. Investigação da comunicação digital com Arduino**
+
+Depois de identificar os possíveis fios de alimentação, comecei a investigar os três fios restantes. Minha hipótese era que o controle utilizava algum tipo de comunicação digital para transmitir os estados dos botões ao console.
+
+Para isso, utilizei meu Arduino UNO R3 como ferramenta de investigação. A ideia era observar os sinais elétricos e tentar identificar possíveis padrões de comunicação.
+
+Após algumas combinações e experimentos, consegui identificar três sinais:
+
+- **DATA (vermelho):** responsável pela transmissão dos dados referentes aos botões.
+- **CLOCK (azul):** responsável pela sincronização e avanço da leitura dos bits.
+- **LATCH (marrom):** utilizado para controlar a captura ou seleção dos estados dos botões.
+
+Desenvolvi um programa em Arduino para gerar os sinais de controle, realizar as leituras digitais e apresentar os resultados no Monitor Serial. Também configurei a comunicação em 115200 baud e implementei uma comparação entre as leituras atuais e anteriores, exibindo somente quando havia alterações nos estados dos botões.
+
+Com isso, consegui observar uma sequência binária correspondente aos acionamentos do controle, aproximando-me da compreensão de como o chip original transmite suas informações.
+
+**3. Descoberta de uma arquitetura de leitura híbrida**
+
+Durante os experimentos, percebi algo curioso: embora o controle possuísse dez botões, inicialmente conseguia identificar apenas oito deles nas leituras.
+
+Ao cruzar os resultados dos testes com as conexões físicas da placa, percebi que os dois botões restantes apresentavam um comportamento diferente. Enquanto oito botões compartilhavam um ponto comum de acionamento, os outros dois estavam conectados de maneira distinta ao circuito.
+
+Isso levantou a hipótese de que o controle utilizava dois bancos de leitura, com uma lógica de seleção adicional para acessar os botões restantes.
+
+A partir dessa descoberta, comecei a investigar a possibilidade de realizar uma leitura em dois ciclos, alternando o sinal de seleção para acessar os diferentes grupos de botões.
+
+Essa investigação mostrou que nem sempre a quantidade de botões físicos corresponde diretamente à quantidade de sinais necessários para representá-los. O circuito pode utilizar mecanismos de multiplexação e registradores de deslocamento para transmitir diversas informações utilizando poucas conexões.
+
+**4. O que aprendi com esse experimento**
+
+Esse foi um dos primeiros momentos do projeto em que precisei deixar de lado a programação convencional e pensar diretamente no funcionamento de um circuito eletrônico.
+
+Até então, estava acostumado a utilizar bibliotecas e abstrações que escondem boa parte da comunicação entre software e hardware. Dessa vez, precisei investigar sinais elétricos, identificar possíveis níveis lógicos, entender sincronização por clock e interpretar sequências de bits.
+
+Também percebi a importância de utilizar ferramentas diferentes para investigar um mesmo problema. O multímetro me ajudou a compreender as conexões físicas, enquanto o Arduino permitiu observar o comportamento lógico do circuito.
+
+Ainda preciso validar completamente a leitura dos dez botões, especialmente os dois que aparentemente utilizam um segundo ciclo de seleção. Entretanto, já consegui reconstruir boa parte da comunicação do controle sem possuir qualquer documentação técnica original.
+
+Mais do que reaproveitar um periférico antigo, esse experimento me proporcionou uma primeira experiência prática de engenharia reversa de hardware.
+
+### Reflexões e próximos passos
+
+Esses experimentos começaram a conectar diferentes áreas que, até então, eu estava estudando de maneira relativamente isolada.
+
+Com Rust, comecei a reproduzir operações que futuramente estarão presentes no processador que pretendo desenvolver. Com Arduino, comecei a investigar como os sinais elétricos são utilizados para transmitir informações entre componentes.
+
+Percebo que existe uma relação muito maior entre essas duas frentes do que imaginava inicialmente. Afinal, um processador também precisa interpretar informações, executar operações e controlar o fluxo de dados internamente.
+
+Quero continuar avançando nessa direção, aprofundando meus conhecimentos em representação binária, operações com bits e arquitetura de computadores. Também pretendo concluir a investigação do controle retrô para finalmente começar a desenvolver o videogame com a Raspberry Pi Pico.
+
+Ainda estou nos primeiros passos, mas acredito que esses pequenos experimentos são fundamentais para construir uma compreensão mais sólida sobre o funcionamento das máquinas.
+
+**Meu objetivo continua sendo o mesmo: deixar de apenas utilizar a tecnologia e começar a entender como ela é construída.**
